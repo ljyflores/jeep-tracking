@@ -1,1 +1,4 @@
-{"aurora_loop": ["ID1", "ID2", "ID3"], "quezon_ave_loop": ["ID4", "ID5", "ID6"]}
+{
+    "aurora_loop": ["ID1", "ID2", "ID3"], 
+    "quezon_ave_loop": ["ID4", "ID5", "ID6"]
+}

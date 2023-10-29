@@ -1,1 +1,57 @@
-{"AL1": {"lng": 121.1234, "lat": 14.5678}, "AL2": {"lng": 121.2341, "lat": 14.6785}, "AL3": {"lng": 121.3412, "lat": 14.7856}, "AL4": {"lng": 121.4123, "lat": 14.8567}, "AL5": {"lng": 121.4321, "lat": 14.8765}, "QA1": {"lng": 121.3214, "lat": 14.8576}, "QA2": {"lng": 121.2143, "lat": 14.8567}, "QA3": {"lng": 121.1432, "lat": 14.8765}, "QA4": {"lng": 121.1324, "lat": 14.7568}, "QA5": {"lng": 121.1243, "lat": 14.7658}, "QA7": {"lng": 121.1342, "lat": 14.6875}}
+{
+    "AL1": {
+        "lng": 121.1234,
+        "lat": 14.5678,
+        "name": "LTO San Juan Office"
+    },
+    "AL2": {
+        "lng": 121.2341,
+        "lat": 14.6785,
+        "name": "UERM Memorial Hospital"
+    },
+    "AL3": {
+        "lng": 121.3412,
+        "lat": 14.7856,
+        "name": "SM City Sta Mesa"
+    },
+    "AL4": {
+        "lng": 121.4123,
+        "lat": 14.8567,
+        "name": "J Ruiz Station"
+    },
+    "AL5": {
+        "lng": 121.4321,
+        "lat": 14.8765,
+        "name": "Aurora corner Broadway"
+    },
+    "QA1": {
+        "lng": 121.3214,
+        "lat": 14.8576,
+        "name": "Quezon Ave corner G Araneta"
+    },
+    "QA2": {
+        "lng": 121.2143,
+        "lat": 14.8567,
+        "name": "Fisher Mall"
+    },
+    "QA3": {
+        "lng": 121.1432,
+        "lat": 14.8765,
+        "name": "Q Ave corner Timog"
+    },
+    "QA4": {
+        "lng": 121.1324,
+        "lat": 14.7568,
+        "name": "Q Ave corner Sct Borromeo (National Bookstore)"
+    },
+    "QA5": {
+        "lng": 121.1243,
+        "lat": 14.7658,
+        "name": "Q Ave corner EDSA"
+    },
+    "QA7": {
+        "lng": 121.1342,
+        "lat": 14.6875,
+        "name": "Lung Center"
+    }
+}

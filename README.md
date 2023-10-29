@@ -1,5 +1,8 @@
 # jeep-tracking
 
+## Notes
+* <a href="https://docs.google.com/presentation/d/1HBI2O9_CNfGgkSPSBcUgp-rGfJwl4dMcvhflibpxaxk/edit?usp=sharing">Front-End Ideas</a>
+
 ## Front End 
 - [ ] ID Text Box + Query BigQuery API + Enter Button (1)
 - [ ] List of Arriving Jeeps (1)

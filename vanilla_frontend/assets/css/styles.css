@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 600px;
+}
+
+.card {
+    border: none;
+    border-radius: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: white;
+    border: none;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header .btn {
+    text-align: left;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.card-body ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.card-body li {
+    margin-bottom: 10px;
+}

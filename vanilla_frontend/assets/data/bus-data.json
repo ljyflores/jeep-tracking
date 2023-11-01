@@ -1,0 +1,62 @@
+{
+    "AL1": {
+        "stopName": "5th Ave corner 72nd",
+        "buses": [
+            {
+                "route": "Aurora Loop",
+                "busID": "PRG 356",
+                "eta": "5 mins"
+            },
+            {
+                "route": "Downtown Express",
+                "busID": "FRD 902",
+                "eta": "10 mins"
+            },
+            {
+                "route": "Seaside Drive",
+                "busID": "TRL 463",
+                "eta": "15 mins"
+            }
+        ]
+    },
+    "AL2": {
+        "stopName": "8th Ave corner 55th",
+        "buses": [
+            {
+                "route": "Uptown Circuit",
+                "busID": "KLM 125",
+                "eta": "3 mins"
+            },
+            {
+                "route": "Airport Line",
+                "busID": "XYZ 784",
+                "eta": "7 mins"
+            }
+        ]
+    },
+    "AL3": {
+        "stopName": "Broadway corner 42nd",
+        "buses": [
+            {
+                "route": "Midtown Direct",
+                "busID": "ABC 123",
+                "eta": "2 mins"
+            },
+            {
+                "route": "Harbor Route",
+                "busID": "DEF 456",
+                "eta": "20 mins"
+            },
+            {
+                "route": "Parkside Shuttle",
+                "busID": "GHI 789",
+                "eta": "10 mins"
+            },
+            {
+                "route": "University Link",
+                "busID": "JKL 012",
+                "eta": "30 mins"
+            }
+        ]
+    }
+}

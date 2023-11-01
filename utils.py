@@ -8,14 +8,34 @@ from datetime import datetime
 from haversine import haversine
 from typing import List
 
+### BIGQUERY FUNCTIONS ###
+def insert_rows_bigquery(client, table_id, table, row_ids=None):
+    rows = table.to_dict("records")
+    errors = client.insert_rows_json(
+        table_id, rows, row_ids=[None] * len(rows) if row_ids is None else row_ids
+    )  # Make an API request.
+    if errors == []:
+        return "New rows have been added."
+    else:
+        return "Encountered errors while inserting rows: {}".format(errors)
+    
+def query_latest_etas(client):
+    QUERY = (
+        'SELECT agg.table.* FROM (SELECT stop_id, ARRAY_AGG(STRUCT(table) ORDER BY insertion_time DESC)[SAFE_OFFSET(0)] agg FROM `eco-folder-402813.jeep_etas.test` table GROUP BY stop_id)'
+    )
+    query_job = client.query(QUERY)  # API request
+    rows = query_job.result()  # Waits for query to finish
+
+    output = [row for row in rows]
+    return output
+
 ### LOCATION AND PLATE NUMBER HELPER FUNCTIONS ###
 def add_plate_numbers_to_df(jeep_id_col, jeep_information_dict):
     return jeep_id_col.apply(
         lambda lst: [jeep_information_dict[item]["plate_number"] for item in lst]
         )
 
-def save_addresses(
-        historical_geocoding_table: pd.DataFrame, 
+def create_df_new_historical_addresses(
         name_lst: List[str], 
         coords_lst: List[tuple]
         ):
@@ -24,11 +44,9 @@ def save_addresses(
         "lat": [c[0] for c in coords_lst], 
         "lng": [c[1] for c in coords_lst]
         })
-    historical_geocoding_table = pd.concat([historical_geocoding_table, temp], ignore_index=True)
-    return historical_geocoding_table
+    return temp
 
-def save_etas(
-        historical_eta_table: pd.DataFrame,
+def create_df_new_historical_etas(
         stop_id: str,
         location_list: List[tuple],
         eta_list: List[float]
@@ -41,8 +59,8 @@ def save_etas(
         "time": [datetime.now()]*N,
         "eta": eta_list
         })
-    historical_eta_table = pd.concat([historical_eta_table, temp], ignore_index=True)
-    return historical_eta_table
+    temp["time"] = temp["time"].dt.strftime('%Y-%m-%d %H:%M:%S')
+    return temp
 
 def refine_location(
         found_coord: tuple, 
@@ -67,7 +85,6 @@ def refine_location(
     """
 
     acceptable_distance_km = 0.010
-    print(gps_location, found_coord)
     if haversine(
         (gps_location[1], gps_location[0]), 
         (found_coord[1], found_coord[0])
@@ -165,7 +182,6 @@ def query_api_matrix(
     coords_string      = ";".join([f"{coords[0]},{coords[1]}" for coords in origin_coords+destination_coords])
     idx_origins_string = ";".join([str(s) for s in idx_origins])
     idx_dests_string   = ";".join([str(s) for s in idx_dests])
-    print(coords_string)
 
     result = requests.get(
         f"https://api.mapbox.com/directions-matrix/v1/mapbox/driving/{coords_string}?annotations=duration&sources={idx_origins_string}&destinations={idx_dests_string}&access_token={MAPBOX_API_KEY}"
@@ -218,12 +234,12 @@ def query_route(
     stop_locations = [stop_coords_mapping_dict[stop_id] for stop_id in stop_ids]
     stop_locations_arr = np.array([dict_to_tuple_coords(c) for c in stop_locations])
 
-    print(jeep_locations_arr)
-    print(stop_locations_arr)
-
     # Loop through the stops, and find the jeeps closest to them, their current locations,
     # and their arrival times
     stop_id_list, jeep_ids_list, jeep_locations_list, jeep_arrival_times_list = [], [], [], []
+    new_historical_geocoding_table = pd.DataFrame(columns=['names', 'lng', 'lat'])
+    new_historical_eta_table = pd.DataFrame(columns=['stop_id', 'lng', 'lat', 'time', 'eta'])
+
     for i, stop_id in enumerate(stop_ids):
         
         # Find the jeep IDs which are currently closest to the stop
@@ -254,17 +270,17 @@ def query_route(
             jeep_arrival_times = [duration_matrix[i,0] for i in range(len(closest_k_jeep_ids))]
 
             # Save address names and coordinates for future lookups
-            historical_geocoding_table = save_addresses(
-                historical_geocoding_table = historical_geocoding_table,
+            new_historical_geocoding_rows = create_df_new_historical_addresses(
                 name_lst = jeep_found_locations, 
                 coords_lst = jeep_found_coordinates
                 )
-            historical_eta_table = save_etas(
-                historical_eta_table = historical_eta_table,
+            new_historical_eta_rows = create_df_new_historical_etas(
                 stop_id = stop_id,
                 location_list = [jeep_locations_arr[id] for id in closest_k_jeep_ids],
                 eta_list = jeep_arrival_times
             )
+            new_historical_geocoding_table = pd.concat([new_historical_geocoding_table, new_historical_geocoding_rows], ignore_index=True)
+            new_historical_eta_table = pd.concat([new_historical_eta_table, new_historical_eta_rows], ignore_index=True)
 
             # If we queried the locations using MapBox, refine the names by looking 
             # up closer points from our database of coordinates to names
@@ -295,8 +311,7 @@ def query_route(
             )
             # Save the arrival times        
             jeep_arrival_times = [duration_matrix[i,0] for i in range(len(closest_k_jeep_ids))]
-
-            #
+            
         # Save the jeep IDs
         jeep_id_names = [jeep_ids[id] for id in closest_k_jeep_ids]
 
@@ -306,12 +321,12 @@ def query_route(
         jeep_arrival_times_list.append(jeep_arrival_times)
     
     return {
-        "stop_id_list": stop_id_list, 
+        "stop_id": stop_id_list, 
         "jeep_ids_list": jeep_ids_list,
         "jeep_locations_list": jeep_locations_list, 
         "jeep_arrival_times_list": jeep_arrival_times_list,
-        "historical_geocoding_table": historical_geocoding_table,
-        "historical_eta_table": historical_eta_table
+        "historical_geocoding_table": new_historical_geocoding_table,
+        "historical_eta_table": new_historical_eta_table
     }
 
 ### JSON UTILITIES ###

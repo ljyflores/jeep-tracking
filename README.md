@@ -13,9 +13,12 @@
 - [ ] Function to save time and ID queried by commuter to BQ table (4)
 
 ## Back End
-- [ ] BigQuery Table for Current ETAs (set-up + query functions) (1)
-- [ ] BigQuery Table for Historical ETAs + Geolocation (set-up + query functions) (1)
-- [ ] AirTag GPS (1) – ordered an AirTag!
+- [ ] Implement end-to-end flowchart
+- [ ] AirTag GPS (1) – AirTag arrived!
+- [X] BigQuery Table for Current ETAs (set-up + query functions) (1)
+- [X] BigQuery Table for Historical ETAs + Geolocation (set-up + query functions) (1)
+
+![](backend_flowchart.drawio.png)
 
 ## Feature Wishlist
 - [ ] Android App

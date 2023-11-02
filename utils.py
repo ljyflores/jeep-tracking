@@ -56,8 +56,8 @@ def create_df_new_historical_addresses(
         ):
     temp = pd.DataFrame({
         "names": name_lst, 
-        "lat": [c[1] for c in coords_lst], 
-        "lng": [c[0] for c in coords_lst]
+        "lng": [c[0] for c in coords_lst],
+        "lat": [c[1] for c in coords_lst]
         })
     return temp
 
@@ -69,8 +69,8 @@ def create_df_new_historical_etas(
     N = len(location_list)
     temp = pd.DataFrame({
         "stop_id": [stop_id]*N,
-        "lat": [c[1] for c in location_list],
         "lng": [c[0] for c in location_list],
+        "lat": [c[1] for c in location_list],
         "time": [datetime.now()]*N,
         "eta": eta_list
         })
@@ -160,14 +160,12 @@ def query_historical_matrix(
         for j, jeep_coord in enumerate(origin_coords):
             # Compute delta in location from the jeep to available historical data
             delta_locs = np.sum((jeep_coord-historical_jeep_locs)**2 + 0.001, axis=1)
-            print("delta_locs", delta_locs)
             delta_locs  = np.exp(-1*np.abs(delta_locs))
 
             # Compute delta in times they were queried 
             helper = np.vectorize(lambda x: x.total_seconds())
             delta_times = helper(datetime.now() - historical_jeep_times) / 60
             delta_times = delta_times % 1440 # Don't take days into account
-            print(delta_times)
             delta_times = np.exp(-0.01*np.abs(0.001 + delta_times))
             
             # Use these as weights for the ETA

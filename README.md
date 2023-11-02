@@ -13,10 +13,17 @@
 - [ ] Function to save time and ID queried by commuter to BQ table (4)
 
 ## Back End
-- [ ] Implement end-to-end flowchart
 - [ ] AirTag GPS (1) – AirTag arrived!
+- [ ] Automate querying with AirFlow
+- [X] Implement end-to-end flowchart
 - [X] BigQuery Table for Current ETAs (set-up + query functions) (1)
 - [X] BigQuery Table for Historical ETAs + Geolocation (set-up + query functions) (1)
+
+### Script to Update Table
+To update the table, we run the `query.py` script; to do so, we run
+```
+python query.py --route_name aurora_loop --use_mapbox True
+```
 
 ![](backend_flowchart.drawio.png)
 
@@ -41,18 +48,18 @@ Goal: Be able to use Python to query the tables we have stored in BQ
 
 This is how we then query a table:
 ```
-from google.cloud import bigquery
+import pandas as pd
 
+from google.cloud import bigquery
+from utils import query_latest_etas
+
+# Specify the project folder to establish a client
 client = bigquery.Client(project="eco-folder-402813")
 
-QUERY = (
-    'SELECT * FROM `jeep_etas.test` '
-    'LIMIT 100')
-query_job = client.query(QUERY)  # API request
-rows = query_job.result()  # Waits for query to finish
+# Run the query to get the latest ETAs per stop
+output = query_latest_etas(client)
 
-for row in rows:
-    print(row)
+# Display the output as a DataFrame
+pd.DataFrame.from_dict([dict(item) for item in output])
+
 ```
-  
-* 

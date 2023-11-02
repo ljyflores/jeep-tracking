@@ -19,15 +19,30 @@ def insert_rows_bigquery(client, table_id, table, row_ids=None):
     else:
         return "Encountered errors while inserting rows: {}".format(errors)
     
+def query_bigquery(client, QUERY):
+    query_job = client.query(QUERY)  # API request
+    rows = query_job.result()  # Waits for query to finish
+    output = [row for row in rows]
+    return pd.DataFrame.from_dict([dict(row) for row in output])
+
 def query_latest_etas(client):
     QUERY = (
         'SELECT agg.table.* FROM (SELECT stop_id, ARRAY_AGG(STRUCT(table) ORDER BY insertion_time DESC)[SAFE_OFFSET(0)] agg FROM `eco-folder-402813.jeep_etas.test` table GROUP BY stop_id)'
     )
-    query_job = client.query(QUERY)  # API request
-    rows = query_job.result()  # Waits for query to finish
+    return query_bigquery(client, QUERY) 
 
-    output = [row for row in rows]
-    return output
+def query_historical_table(client, table_id):
+    QUERY = f"SELECT * FROM `{table_id}`"
+    return query_bigquery(client, QUERY)
+
+def postprocess_eta_table(records, jeep_information_dict):
+    df_temp = pd.DataFrame(records)
+    df_temp["jeep_plate_num_list"] = add_plate_numbers_to_df(df_temp["jeep_ids_list"], jeep_information_dict)
+    df_temp["insertion_time"]      = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    for col in ['jeep_ids_list', 'jeep_locations_list', 'jeep_arrival_times_list', 'jeep_plate_num_list']:
+        df_temp[col] = df_temp[col].apply(lambda lst: ",".join([str(x) for x in lst]))
+    return df_temp
 
 ### LOCATION AND PLATE NUMBER HELPER FUNCTIONS ###
 def add_plate_numbers_to_df(jeep_id_col, jeep_information_dict):
@@ -41,8 +56,8 @@ def create_df_new_historical_addresses(
         ):
     temp = pd.DataFrame({
         "names": name_lst, 
-        "lat": [c[0] for c in coords_lst], 
-        "lng": [c[1] for c in coords_lst]
+        "lat": [c[1] for c in coords_lst], 
+        "lng": [c[0] for c in coords_lst]
         })
     return temp
 
@@ -54,8 +69,8 @@ def create_df_new_historical_etas(
     N = len(location_list)
     temp = pd.DataFrame({
         "stop_id": [stop_id]*N,
-        "lat": [c[0] for c in location_list],
-        "lng": [c[1] for c in location_list],
+        "lat": [c[1] for c in location_list],
+        "lng": [c[0] for c in location_list],
         "time": [datetime.now()]*N,
         "eta": eta_list
         })
@@ -137,19 +152,30 @@ def query_historical_matrix(
             continue
 
         historical_jeep_locs  = np.array([historical_stop["lng"], historical_stop["lat"]]).T
-        historical_jeep_times = np.array(historical_stop["time"].dt.to_pydatetime())
+        historical_jeep_times = np.array(pd.to_datetime(
+            historical_stop["time"], 
+            errors='coerce').dt.to_pydatetime())
         historical_jeep_etas  = np.array(historical_stop["eta"])
 
         for j, jeep_coord in enumerate(origin_coords):
             # Compute delta in location from the jeep to available historical data
-            # and the times they were queried – to use as weights for the ETA
-            delta_locs  = np.exp(-1*np.abs(np.sum((jeep_coord-historical_jeep_locs)**2, axis=1)))
+            delta_locs = np.sum((jeep_coord-historical_jeep_locs)**2 + 0.001, axis=1)
+            print("delta_locs", delta_locs)
+            delta_locs  = np.exp(-1*np.abs(delta_locs))
+
+            # Compute delta in times they were queried 
             helper = np.vectorize(lambda x: x.total_seconds())
-            delta_times = datetime.now()-historical_jeep_times
-            delta_times = np.exp(-0.01*np.abs(helper(delta_times)/60))
+            delta_times = helper(datetime.now() - historical_jeep_times) / 60
+            delta_times = delta_times % 1440 # Don't take days into account
+            print(delta_times)
+            delta_times = np.exp(-0.01*np.abs(0.001 + delta_times))
+            
+            # Use these as weights for the ETA
             weights = delta_locs * delta_times
+
             # Normalize
             weights = weights/np.sum(weights)
+
             # Use weights to take weighted average of ETA
             duration_matrix[j,i] = np.sum(historical_jeep_etas * weights)
 

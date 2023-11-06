@@ -13,8 +13,8 @@
 - [ ] Function to save time and ID queried by commuter to BQ table (4)
 
 ## Back End
-- [ ] AirTag GPS (1) – AirTag arrived!
 - [ ] Automate querying with AirFlow
+- [X] AirTag GPS – AirTag arrived – update: it's clunky, hunting for better tech that works in PH
 - [X] Implement end-to-end flowchart
 - [X] BigQuery Table for Current ETAs (set-up + query functions) (1)
 - [X] BigQuery Table for Historical ETAs + Geolocation (set-up + query functions) (1)

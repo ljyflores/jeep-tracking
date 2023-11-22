@@ -40,7 +40,9 @@ python query.py --route_name aurora_loop --use_mapbox True
 Requirements text file to come
 
 ### Google Cloud API
-Goal: Be able to use Python to query the tables we have stored in BQ
+Goal: Be able to use JS/Python to query the tables we have stored in BQ
+
+#### Python
 * Step 1: Install the Google Cloud CLI following steps 1-4 here: https://cloud.google.com/sdk/docs/install
 * Step 2: Log in and create a credential file using `./google-cloud-sdk/bin/gcloud auth application-default login` (This will lead you to sign-in online into the GMail account, sign in with AsanKa, or personal emails)
 * Step 3: Set the project name using `./google-cloud-sdk/bin/gcloud config set project eco-folder-402813`
@@ -61,5 +63,19 @@ output = query_latest_etas(client)
 
 # Display the output as a DataFrame
 pd.DataFrame.from_dict([dict(item) for item in output])
-
 ```
+
+#### JavaScript
+First, in the terminal, upgrade the version of Javascript
+```
+sudo npm cache clean -f 
+sudo npm install -g n install n 
+sudo n stable
+```
+
+Then, install the Google Cloud BigQuery package
+```
+npm install @google-cloud/bigquery
+```
+
+Finally, run the query.js script

@@ -5,19 +5,14 @@
 * <a href="https://docs.google.com/document/d/1W9fd7fIbHWqNY2xjkL8QkQWF4GuLpQxDbfExf7RjfAw/edit?usp=sharing">Logistics + Business Ideas</a>
 
 ## Front End 
-- [ ] ID Text Box + Query BigQuery API + Enter Button (1)
-- [ ] List of Arriving Jeeps (1)
-- [ ] Drop-down List of Stops from Each Jeep (1)
-- [ ] Notif Sounds at 5, 3, 1, 0 Mark (2)
-- [ ] QR Code Link to Website (i.e. scan QR code, opens the website) (3)
-- [ ] Function to save time and ID queried by commuter to BQ table (4)
+- [ ] Notif Sounds at 5, 3, 1, 0 Mark
+- [ ] QR Code Link to Website (i.e. scan QR code, opens the website)
+- [ ] Function to save time and ID queried by commuter to BQ table
 
 ## Back End
 - [ ] Automate querying with AirFlow
-- [X] AirTag GPS – AirTag arrived – update: it's clunky, hunting for better tech that works in PH
-- [X] Implement end-to-end flowchart
-- [X] BigQuery Table for Current ETAs (set-up + query functions) (1)
-- [X] BigQuery Table for Historical ETAs + Geolocation (set-up + query functions) (1)
+- [ ] Get GPS working agh
+- [ ] Get CloudFlare site hosted
 
 ### Script to Update Table
 To update the table, we run the `query.py` script; to do so, we run

@@ -11,7 +11,7 @@
 
 ## Back End
 - [ ] Automate querying with AirFlow
-- [ ] Get GPS working agh
+- [X] Get GPS working agh
 - [ ] Get CloudFlare site hosted
 
 ### Script to Update Table

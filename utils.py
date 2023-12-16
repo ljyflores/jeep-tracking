@@ -8,6 +8,8 @@ from datetime import datetime
 from haversine import haversine
 from typing import List
 
+TRACKER_CREDENTIALS = json.load(open("credentials/tracker.json", "r"))
+
 ### BIGQUERY FUNCTIONS ###
 def insert_rows_bigquery(client, table_id, table, row_ids=None):
     rows = table.to_dict("records")
@@ -130,13 +132,41 @@ def dict_to_tuple_coords(d):
 def has_not_passed(stop_id: str, jeep_id: str):
     return True
 
-# TODO: Get API working
-def query_gps(jeep_id: str, use_random: bool):
-    if use_random:
-        return {"lng": random.uniform(121.02, 121.05), "lat": random.uniform(14.65, 14.70)}
-    else:
-        # return {"lng": None, "lat": None}
-        raise NotImplementedError
+def query_gps(tracker_id: str):
+    try:
+        response = requests.post(
+            url = "https://242.sinotrack.com/APP/AppJson.asp", 
+            data = {
+                "strAppID": TRACKER_CREDENTIALS["strAppID"],
+                "strUser": tracker_id,
+                "strRandom": TRACKER_CREDENTIALS["strRandom"],
+                "nTimeStamp": TRACKER_CREDENTIALS["nTimeStamp"],
+                "strSign": TRACKER_CREDENTIALS["strSign"],
+                "strToken": TRACKER_CREDENTIALS["strToken"]
+            }, 
+            headers = {
+                "POST": "/APP/AppJson.asp HTTP/1.1",
+                "Host": "242.sinotrack.com",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:120.0) Gecko/20100101 Firefox/120.0",
+                "Accept": "text/plain, */*; q=0.01",
+                "Accept-Language": "en-US,en;q=0.5",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Referer": "http://sinotrackpro.com/",
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "Content-Length": "220",
+                "Origin": "http://sinotrackpro.com",
+                "Connection": "keep-alive",
+                "Sec-Fetch-Dest": "empty",
+                "Sec-Fetch-Mode": "cors",
+                "Sec-Fetch-Site": "cross-site"
+            }
+        ).json()
+        return {
+            "lng": float(response["m_arrRecord"][0][2]), 
+            "lat": float(response["m_arrRecord"][0][3])
+            }
+    except:
+        return {"lng": -999.9, "lat": -999.9}
 
 def query_historical_matrix(
         historical_table: pd.DataFrame,
@@ -228,6 +258,7 @@ def query_route(
         jeep_route_mapping_dict: dict, 
         route_stops_mapping_dict: dict, 
         stop_coords_mapping_dict: dict, 
+        tracker_mapping_dict: dict,
         historical_geocoding_table: pd.DataFrame,
         historical_eta_table: pd.DataFrame,
         use_mapbox: bool,
@@ -241,6 +272,7 @@ def query_route(
         jeep_route_mapping_dict (dict): Dictionary of the route name and the jeep IDs that travel that route (list)
         route_stops_mapping_dict (dict): Dictionary of the route name and the stop IDs on the route (list)
         stop_coords_mapping_dict (dict): Dictionary of the stop ID and its coordinate dictionary (dict)
+        tracker_mapping_dict (dict): Dictionary mapping Jepp ID to tracker number
         historical_geocoding_table (pd.DataFrame): Geocoding dataframe with 'names' and 'coords' columns
         historical_eta_table (pd.DataFrame): Historical ETA dataframe with 'stop_id', 'location', 'time', 'eta' columns
         use_mapbox (bool): True if using MapBox to query locations, False to use info from database
@@ -250,7 +282,7 @@ def query_route(
     """
     # Get list of jeep IDs and coordinates
     jeep_ids = jeep_route_mapping_dict[route_name]
-    jeep_locations = [query_gps(jeep_id=jeep_id, use_random=True) for jeep_id in jeep_ids]
+    jeep_locations = [query_gps(tracker_id=tracker_mapping_dict[jeep_id]) for jeep_id in jeep_ids]
     jeep_locations_arr = np.array([dict_to_tuple_coords(c) for c in jeep_locations])
 
     # Get list of stop IDs and coordinates

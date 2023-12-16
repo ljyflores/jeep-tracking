@@ -1,32 +1,26 @@
 {
     "ID1": {
         "driver": "Mark Santos",
-        "plate_number": "ABC12345",
-        "tracker_id": 1
+        "plate_number": "ABC12345"
     },
     "ID2": {
         "driver": "Matthew Santos",
-        "plate_number": "DEF67890",
-        "tracker_id": 2
+        "plate_number": "DEF67890"
     },
     "ID3": {
         "driver": "Luke Santos",
-        "plate_number": "GHI12345",
-        "tracker_id": 3
+        "plate_number": "GHI12345"
     },
     "ID4": {
         "driver": "John Santos",
-        "plate_number": "JKL67890",
-        "tracker_id": 4
+        "plate_number": "JKL67890"
     },
     "ID5": {
         "driver": "Jesus daChild",
-        "plate_number": "MNO12345",
-        "tracker_id": 5
+        "plate_number": "MNO12345"
     },
     "ID6": {
         "driver": "Mary Joseph",
-        "plate_number": "PQR67890",
-        "tracker_id": 6
+        "plate_number": "PQR67890"
     }
 }

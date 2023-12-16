@@ -32,6 +32,7 @@ stop_coords_mapping_dict = read_json("data/stop_coords_mapping_dict.json")
 jeep_route_mapping_dict  = read_json("data/jeep_route_mapping_dict.json")
 jeep_information_dict    = read_json("data/jeep_information_dict.json")
 route_stops_mapping_dict = read_json("data/route_stops_mapping_dict.json")
+tracker_mapping_dict     = read_json("credentials/tracker_mapping_dict.json")
 
 # Load in the BQ historical tables
 historical_geocoding_table = query_historical_table(client, BQ_HISTORICAL_LOCATIONS_TABLE)
@@ -42,6 +43,7 @@ temp = query_route(
     jeep_route_mapping_dict = jeep_route_mapping_dict, 
     route_stops_mapping_dict = route_stops_mapping_dict, 
     stop_coords_mapping_dict = stop_coords_mapping_dict, 
+    tracker_mapping_dict = tracker_mapping_dict,
     historical_geocoding_table = historical_geocoding_table,
     historical_eta_table = historical_eta_table,
     use_mapbox = USE_MAPBOX,

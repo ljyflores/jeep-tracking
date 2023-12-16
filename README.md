@@ -13,6 +13,7 @@
 - [ ] Automate querying with AirFlow
 - [X] Get GPS working agh
 - [ ] Get CloudFlare site hosted
+- [ ] Figure out the ad integration
 
 ### Script to Update Table
 To update the table, we run the `query.py` script; to do so, we run

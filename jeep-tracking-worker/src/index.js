@@ -23,14 +23,14 @@ async function handle_BQ_Request(request, env) {
 	const token = await oauth.getGoogleAuthToken()
 	
 	// Your SQL query
-	const query = 'SELECT * FROM `eco-folder-402813.jeep_etas.test`'; // 'SELECT agg.table.* FROM (SELECT stop_id, ARRAY_AGG(STRUCT(table) ORDER BY insertion_time DESC)[SAFE_OFFSET(0)] agg FROM `eco-folder-402813.jeep_etas.test` table GROUP BY stop_id)';
-
+	const query = 'SELECT agg.table.* FROM (SELECT stop_id, ARRAY_AGG(STRUCT(table) ORDER BY insertion_time DESC)[SAFE_OFFSET(0)] agg FROM `eco-folder-402813.jeep_etas.test` table GROUP BY stop_id)';
+    
 	const response = await fetch(
 		'https://bigquery.googleapis.com/bigquery/v2/projects/eco-folder-402813/queries', {
 		method: 'POST',
 		headers: {
 			'Authorization': `Bearer ${token}`,
-			'Content-Type': 'application/json',
+			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
 			query: query,
@@ -39,10 +39,12 @@ async function handle_BQ_Request(request, env) {
 	})
 
 	// Parse and return the response
-	const result = response.json();
-	return new Response(JSON.stringify(result), {
-		headers: {'Content-Type': 'application/json'},
-	});
+	// const result = response.json();
+	// return new Response(JSON.stringify(result), {
+	// 	headers: {'Content-Type': 'application/json'},
+	// });
+
+	return new Response(response.body);
 }
 
 // Export a default object containing event handlers

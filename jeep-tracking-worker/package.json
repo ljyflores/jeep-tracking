@@ -1,0 +1,35 @@
+{
+  "name": "jeep-tracking-worker",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "start": "wrangler dev"
+  },
+  "devDependencies": {
+    "itty-router": "^3.0.12",
+    "wrangler": "^3.0.0"
+  },
+  "dependencies": {
+    "@google-cloud/bigquery": "^7.3.0",
+    "assert": "^2.1.0",
+    "buffer": "^6.0.3",
+    "child_process": "^1.0.2",
+    "cloudflare-workers-and-google-oauth": "^2.0.0",
+    "crypto": "^1.0.1",
+    "events": "^3.3.0",
+    "fs": "^0.0.1-security",
+    "google-auth-library": "^9.4.1",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "net": "^1.0.2",
+    "os": "^0.1.2",
+    "path": "^0.12.7",
+    "querystring": "^0.2.1",
+    "stream": "^0.0.2",
+    "tls": "^0.0.1",
+    "url": "^0.11.3",
+    "util": "^0.12.5"
+  }
+}

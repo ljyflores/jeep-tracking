@@ -33,7 +33,30 @@ python query.py --route_name aurora_loop --use_mapbox True
 
 ## Set-Up
 ### Environment
-Requirements text file to come
+```
+conda create -n jeep_tracking python=3.9
+pip install -r requirements.txt
+```
+
+### AirFlow 
+Setting Up AirFlow
+```
+export AIRFLOW_HOME=~/airflow
+airflow db init
+
+airflow users create \
+    --username admin \
+    --firstname Lorenzo \
+    --lastname Flores \
+    --role Admin \
+    --email jeep.tracking.app@gmail.com
+```
+
+Open AirFlow Web Interface
+```
+airflow webserver --port 8080
+airflow scheduler
+```
 
 ### Google Cloud API
 Goal: Be able to use JS/Python to query the tables we have stored in BQ

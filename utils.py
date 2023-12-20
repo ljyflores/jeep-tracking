@@ -8,7 +8,7 @@ from datetime import datetime
 from haversine import haversine
 from typing import List
 
-TRACKER_CREDENTIALS = json.load(open("credentials/tracker.json", "r"))
+TRACKER_CREDENTIALS = json.load(open("/home/airflow/gcs/data/tracker.json", "r"))
 
 ### BIGQUERY FUNCTIONS ###
 def insert_rows_bigquery(client, table_id, table, row_ids=None):

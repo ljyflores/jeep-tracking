@@ -10,7 +10,7 @@
 - [ ] Function to save time and ID queried by commuter to BQ table
 
 ## Back End
-- [ ] Automate querying with AirFlow
+- [X] Automate querying with AirFlow
 - [X] Get GPS working agh
 - [ ] Get CloudFlare site hosted
 - [ ] Figure out the ad integration

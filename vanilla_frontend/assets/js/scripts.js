@@ -239,14 +239,14 @@ function stopListHTML(stopList) {
         if (i == 0) {
             html += `<li class="fw-bold">
                 <div class="row align-items-center w-100">
-                <div class="col">${stopList[i]}</div>
-            </div>`
+                <div class="col">${stopList[i]}</div></div>
+            </li>`
 
         } else {
             html += `<li>
                 <div class="row align-items-center w-100">
                 <div class="col">${stopList[i]}</div>
-            </div>`
+            </div></li>`
         }
     }
     return `<ul>${html}</ul>`

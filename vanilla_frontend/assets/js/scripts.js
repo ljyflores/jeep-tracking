@@ -211,8 +211,8 @@ function processBusData(data, currentStopID) {
             const locationArray = locations.split(',');
             const etaArray = etas.split(',');
             const plateArray = plates.split(',');
-            const routeNameArray = routeNames.split(',');
-            const nextStopArray = nextStops.split(';');
+            // const routeNameArray = routeNames.split(',');
+            // const nextStopArray = nextStops.split(';');
 
 
             // Construct bus objects and add them to busList
@@ -222,8 +222,10 @@ function processBusData(data, currentStopID) {
                     location: locationArray[i],
                     eta: Math.round(parseFloat(etaArray[i]) / 60),
                     plate: plateArray[i],
-                    routeName: routeNameArray[i],
-                    nextStopList: nextStopArray[i].split(",")
+                    routeName: "Aurora Loop",
+                    nextStopList: ["current stop", "next stop"]
+                    // routeName: routeNameArray[i],
+                    // nextStopList: nextStopArray[i].split(",")
                 });
             }
         }
@@ -252,7 +254,7 @@ function stopListHTML(stopList) {
     return `<ul>${html}</ul>`
 }
 
-$(document).ready(function () {
+$(document).ready(async function () {
   // const fetchData = function(callback) {
   //     $.getJSON('data/bus-data.json', callback);
   // };
@@ -269,7 +271,9 @@ $(document).ready(function () {
   if (window.location.pathname.includes("stops.html")) {
     const params = new URLSearchParams(window.location.search);
     const stopID = params.get("stop");
-    const processedBuses = processBusData(sample_data, stopID);
+    sample_data2 = await fetch('https://jeep-tracking-worker.ljyflores.workers.dev/query').then(a=>a.json());
+    sample_data2 = sample_data2.rows;
+    const processedBuses = processBusData(sample_data2, stopID);
     console.log(processedBuses);
     if (data[stopID]) {
       $("#currentStop").text(data[stopID].stopName);

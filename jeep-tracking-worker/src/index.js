@@ -47,7 +47,9 @@ async function handle_BQ_Request(url, env) {
 	// 	headers: {'Content-Type': 'application/json'},
 	// });
 
-	return new Response(response.body);
+	return new Response(
+		response.body,
+		{headers: {'Access-Control-Allow-Origin': '*'}});
 }
 
 // Export a default object containing event handlers

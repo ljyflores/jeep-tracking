@@ -2,6 +2,3 @@ numpy
 pandas
 google-cloud-bigquery
 haversine
-apache-airflow[postgres]
-apache-airflow[cncf.kubernetes]
-# apache-airflow-providers-google==10.1.0

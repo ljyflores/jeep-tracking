@@ -98,3 +98,9 @@ npm install @google-cloud/bigquery
 ```
 
 Finally, run the query.js script
+
+## CloudFlare Workers Notes
+```
+# To query the BigQuery JSON
+fetch('https://jeep-tracking-worker.ljyflores.workers.dev/query').then(res => res.json())
+```

@@ -268,7 +268,7 @@ $(document).ready(async function () {
     }
   });
 
-  if (window.location.pathname.includes("stops.html")) {
+  if (window.location.pathname.includes("stops.html") || window.location.pathname.includes("stops?stop=")) {
     const params = new URLSearchParams(window.location.search);
     const stopID = params.get("stop");
     sample_data2 = await fetch('https://jeep-tracking-worker.ljyflores.workers.dev/query').then(a=>a.json());

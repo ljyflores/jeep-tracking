@@ -13,7 +13,7 @@ import handleRedirect from './redirect';
 import apiRouter from './router';
 import GoogleAuth, { GoogleKey } from 'cloudflare-workers-and-google-oauth'
 
-async function handle_BQ_Request(request, env) {
+async function handle_BQ_Request(url, env) {
 
 	const scopes = ['https://www.googleapis.com/auth/bigquery']
 	const googleAuth = JSON.parse(env.BIGQUERY_KEY)
@@ -23,8 +23,11 @@ async function handle_BQ_Request(request, env) {
 	const token = await oauth.getGoogleAuthToken()
 	
 	// Your SQL query
+	// const tempList = url.split("stop=")
+	// const StopID = tempList[tempList.length - 1]
+	// const query = 'SELECT agg.table.* FROM (SELECT stop_id, ARRAY_AGG(STRUCT(table) ORDER BY insertion_time DESC)[SAFE_OFFSET(0)] agg FROM (SELECT * FROM `eco-folder-402813.jeep_etas.test` WHERE stop_id=' + StopID + ') table GROUP BY stop_id)';
 	const query = 'SELECT agg.table.* FROM (SELECT stop_id, ARRAY_AGG(STRUCT(table) ORDER BY insertion_time DESC)[SAFE_OFFSET(0)] agg FROM `eco-folder-402813.jeep_etas.test` table GROUP BY stop_id)';
-    
+
 	const response = await fetch(
 		'https://bigquery.googleapis.com/bigquery/v2/projects/eco-folder-402813/queries', {
 		method: 'POST',
@@ -70,7 +73,7 @@ export default {
 		}
 		if (url.pathname.startsWith('/query')) {
 			// You can also use more robust routing
-			return handle_BQ_Request(request, env);
+			return handle_BQ_Request(url, env);
 		}
 
 		return new Response(

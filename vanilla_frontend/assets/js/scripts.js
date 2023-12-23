@@ -196,6 +196,14 @@ const sample_data = [
 // e.g. missing entries etc. then just put [NOT FOUND]
 // e.g. bus ID not found? then just put Invalid Bus ID
 
+async function queryWorkers() {
+  // [START bigquery_query]
+  // [START bigquery_client_default_credentials]
+  // Import the Google Cloud client library using default credentials
+  const output = await fetch('https://jeep-tracking-worker.ljyflores.workers.dev/query').then(res => res.json());
+  return output
+}
+
 function processBusData(data, currentStopID) {
     // Initialize an empty array to hold bus objects
     let busList = [];
@@ -271,7 +279,7 @@ $(document).ready(async function () {
   if (window.location.pathname.includes("stops")) {
     const params = new URLSearchParams(window.location.search);
     const stopID = params.get("stop");
-    sample_data2 = await fetch('https://jeep-tracking-worker.ljyflores.workers.dev/query').then(a=>a.json());
+    sample_data2 = queryWorkers(); // await fetch('https://jeep-tracking-worker.ljyflores.workers.dev/query').then(a=>a.json());
     sample_data2 = sample_data2.rows;
     const processedBuses = processBusData(sample_data2, stopID);
     console.log(processedBuses);

@@ -215,6 +215,7 @@ function processBusData(data, currentStopID) {
 
         // Destructure the array to access elements easily
         const [stopID, ids, locations, etas, plates, times] = entry.f.map(item => item.v);
+        // const [stopID, ids, locations, etas, plates, times, routeNames, nextStops] = entry.f.map(item => item.v);
 
         if (stopID == currentStopID) {
             // Split the string values to arrays

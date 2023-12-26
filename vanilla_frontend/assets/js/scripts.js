@@ -284,7 +284,9 @@ $(document).ready(async function () {
     const params = new URLSearchParams(window.location.search);
     const stopID = params.get("stop");
     sample_data2 = queryWorkers(); // await fetch('https://jeep-tracking-worker.ljyflores.workers.dev/query').then(a=>a.json());
+    console.log(sample_data2);
     sample_data2 = sample_data2.rows;
+    console.log(sample_data2);
     const processedBuses = processBusData(sample_data2, stopID);
     console.log(processedBuses);
     if (data[stopID]) {

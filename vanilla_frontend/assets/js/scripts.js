@@ -201,6 +201,7 @@ async function queryWorkers() {
   // [START bigquery_client_default_credentials]
   // Import the Google Cloud client library using default credentials
   const output = await fetch('https://jeep-tracking-worker.ljyflores.workers.dev/query').then(res => res.json());
+  console.log(output.rows)
   return output
 }
 

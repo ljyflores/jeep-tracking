@@ -207,11 +207,11 @@ function queryWorkers() {
 function processBusData(data, currentStopID) {
     // Initialize an empty array to hold bus objects
     let busList = [];
-
+    console.log("Within processBusData function")
     // Loop through each bus entry in the data
     data.forEach(entry => {
         console.log(entry);
-        
+
         // Destructure the array to access elements easily
         const [stopID, ids, locations, etas, plates, times, routeNames, nextStops] = entry.f.map(item => item.v);
 

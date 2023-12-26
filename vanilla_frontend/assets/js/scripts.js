@@ -196,11 +196,11 @@ const sample_data = [
 // e.g. missing entries etc. then just put [NOT FOUND]
 // e.g. bus ID not found? then just put Invalid Bus ID
 
-async function queryWorkers() {
+function queryWorkers() {
   // [START bigquery_query]
   // [START bigquery_client_default_credentials]
   // Import the Google Cloud client library using default credentials
-  const output = await fetch('https://jeep-tracking-worker.ljyflores.workers.dev/query').then(res => res.json());
+  const output = fetch('https://jeep-tracking-worker.ljyflores.workers.dev/query').then(res => res.json());
   return output
 }
 
@@ -210,6 +210,8 @@ function processBusData(data, currentStopID) {
 
     // Loop through each bus entry in the data
     data.forEach(entry => {
+        console.log(entry);
+        
         // Destructure the array to access elements easily
         const [stopID, ids, locations, etas, plates, times, routeNames, nextStops] = entry.f.map(item => item.v);
 

@@ -290,9 +290,12 @@ def query_route(
     stop_locations = [stop_coords_mapping_dict[stop_id] for stop_id in stop_ids]
     stop_locations_arr = np.array([dict_to_tuple_coords(c) for c in stop_locations])
 
+    # Get list of stop names
+    stop_names_list = [item["name"] for item in stop_locations]
+
     # Loop through the stops, and find the jeeps closest to them, their current locations,
     # and their arrival times
-    stop_id_list, jeep_ids_list, jeep_locations_list, jeep_arrival_times_list = [], [], [], []
+    stop_id_list, jeep_ids_list, jeep_locations_list, jeep_arrival_times_list, jeep_route_name_list, jeep_next_stop_name_list = [], [], [], [], [], []
     new_historical_geocoding_table = pd.DataFrame(columns=['names', 'lng', 'lat'])
     new_historical_eta_table = pd.DataFrame(columns=['stop_id', 'lng', 'lat', 'time', 'eta'])
 
@@ -370,17 +373,26 @@ def query_route(
             
         # Save the jeep IDs
         jeep_id_names = [jeep_ids[id] for id in closest_k_jeep_ids]
+        
+        # Save the jeep routes
+        jeep_route_names = [route_name for _ in range(len(jeep_id_names))]
+        jeep_next_stop_names = [",".join(stop_names_list) for _ in range(len(jeep_id_names))]
 
         stop_id_list.append(stop_id)
         jeep_ids_list.append(jeep_id_names)
         jeep_locations_list.append(jeep_final_locations)
         jeep_arrival_times_list.append(jeep_arrival_times)
-    
+        jeep_route_name_list.append(jeep_route_names)
+        jeep_next_stop_name_list.append(jeep_next_stop_names)
+
     return {
         "stop_id": stop_id_list, 
+        "stop_names": stop_names_list,
         "jeep_ids_list": jeep_ids_list,
         "jeep_locations_list": jeep_locations_list, 
         "jeep_arrival_times_list": jeep_arrival_times_list,
+        "jeep_route_name_list": jeep_route_name_list,
+        "jeep_next_stop_name_list": jeep_next_stop_name_list,
         "historical_geocoding_table": new_historical_geocoding_table,
         "historical_eta_table": new_historical_eta_table
     }

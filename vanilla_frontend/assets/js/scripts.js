@@ -196,14 +196,6 @@ const sample_data = [
 // e.g. missing entries etc. then just put [NOT FOUND]
 // e.g. bus ID not found? then just put Invalid Bus ID
 
-// function queryWorkers() {
-//   // [START bigquery_query]
-//   // [START bigquery_client_default_credentials]
-//   // Import the Google Cloud client library using default credentials
-//   const output = fetch('https://jeep-tracking-worker.ljyflores.workers.dev/query').then(res => res.json());
-//   return output
-// }
-
 function processBusData(data, currentStopID) {
     // Initialize an empty array to hold bus objects
     let busList = [];

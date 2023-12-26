@@ -207,7 +207,8 @@ async function queryWorkers() {
 function processBusData(data, currentStopID) {
     // Initialize an empty array to hold bus objects
     let busList = [];
-    console.log("Within processBusData function")
+    console.log("Within processBusData function");
+    console.log(data);
     // Loop through each bus entry in the data
     data.forEach(entry => {
         console.log(entry);

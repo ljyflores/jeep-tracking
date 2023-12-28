@@ -206,8 +206,8 @@ function processBusData(data, currentStopID) {
         console.log(entry);
 
         // Destructure the array to access elements easily
-        const [stopID, ids, locations, etas, plates, times] = entry.f.map(item => item.v);
-        // const [stopID, ids, locations, etas, plates, times, routeNames, nextStops] = entry.f.map(item => item.v);
+        //const [stopID, ids, locations, etas, plates, times] = entry.f.map(item => item.v);
+        const [stopID, ids, locations, etas, plates, times, stopName, routeNames, nextStops] = entry.f.map(item => item.v);
 
         if (stopID == currentStopID) {
             // Split the string values to arrays
@@ -215,9 +215,8 @@ function processBusData(data, currentStopID) {
             const locationArray = locations.split(',');
             const etaArray = etas.split(',');
             const plateArray = plates.split(',');
-            // const routeNameArray = routeNames.split(',');
-            // const nextStopArray = nextStops.split(';');
-
+            const routeNameArray = routeNames.split(',');
+            const nextStopArray = nextStops.split(';');
 
             // Construct bus objects and add them to busList
             for (let i = 0; i < idArray.length; i++) {
@@ -226,10 +225,10 @@ function processBusData(data, currentStopID) {
                     location: locationArray[i],
                     eta: Math.round(parseFloat(etaArray[i]) / 60),
                     plate: plateArray[i],
-                    routeName: "Aurora Loop",
-                    nextStopList: ["current stop", "next stop"]
-                    // routeName: routeNameArray[i],
-                    // nextStopList: nextStopArray[i].split(",")
+                    // routeName: "Aurora Loop",
+                    // nextStopList: ["current stop", "next stop"]
+                    routeName: routeNameArray[i],
+                    nextStopList: nextStopArray[i].split(",")
                 });
             }
         }

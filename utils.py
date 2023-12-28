@@ -9,6 +9,7 @@ from haversine import haversine
 from typing import List
 
 TRACKER_CREDENTIALS = json.load(open("/home/airflow/gcs/data/tracker.json", "r"))
+# TRACKER_CREDENTIALS = json.load(open("credentials/tracker.json", "r"))
 
 ### BIGQUERY FUNCTIONS ###
 def insert_rows_bigquery(client, table_id, table, row_ids=None):
@@ -42,8 +43,16 @@ def postprocess_eta_table(records, jeep_information_dict):
     df_temp["jeep_plate_num_list"] = add_plate_numbers_to_df(df_temp["jeep_ids_list"], jeep_information_dict)
     df_temp["insertion_time"]      = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-    for col in ['jeep_ids_list', 'jeep_locations_list', 'jeep_arrival_times_list', 'jeep_plate_num_list']:
+    for col in [
+        'jeep_ids_list', 
+        'jeep_locations_list', 
+        'jeep_arrival_times_list', 
+        'jeep_plate_num_list', 
+        'jeep_route_name_list'
+        ]:
         df_temp[col] = df_temp[col].apply(lambda lst: ",".join([str(x) for x in lst]))
+    df_temp["jeep_next_stop_name_list"] = df_temp["jeep_next_stop_name_list"].apply(lambda lst: ";".join([str(x) for x in lst]))
+
     return df_temp
 
 ### LOCATION AND PLATE NUMBER HELPER FUNCTIONS ###

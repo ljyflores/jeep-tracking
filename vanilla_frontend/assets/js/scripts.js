@@ -278,9 +278,9 @@ $(document).ready(async function () {
     const processedBuses = processBusData(sample_data2.rows, stopID);
     console.log(processedBuses);
     if (data[stopID]) {
-      // $("#currentStop").text(data[stopID].stopName);
+      $("#currentStop").text(data[stopID].stopName);
       processedBuses.forEach((bus, index) => {
-        $("#currentStop").text(bus.stopName);
+        // $("#currentStop").text(bus.stopName);
         $("#busDetails").append(
             ` <div class="accordion-item">
                 <h2 class="accordion-header">

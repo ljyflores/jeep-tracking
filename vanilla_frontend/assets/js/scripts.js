@@ -1,64 +1,115 @@
 data = {
   AL1: {
-    stopName: "5th Ave corner 72nd",
+    stopName: "Plaza Principal",
     buses: [
       {
-        route: "Aurora Loop",
+        route: "Ruta A - Centro",
         busID: "PRG 356",
         eta: "5 mins",
-        location: "Broadway corner Church Ave",
+        location: "Avenida Central",
       },
       {
-        route: "Downtown Express",
-        busID: "FRD 902",
+        route: "Expreso Centro",
+        busID: "FRD 902", 
         eta: "10 mins",
-        location: "5th Ave, Near Metropolitan Theater",
+        location: "Calle Comercio",
       },
       {
-        route: "Seaside Drive",
+        route: "Circular Centro",
         busID: "TRL 463",
         eta: "15 mins",
-        location: "4 Privet Drive",
+        location: "Plaza Mayor",
       },
     ],
   },
   AL2: {
-    stopName: "8th Ave corner 55th",
+    stopName: "Mercado Central",
     buses: [
       {
-        route: "Uptown Circuit",
+        route: "Ruta A - Centro",
         busID: "KLM 125",
         eta: "3 mins",
+        location: "Avenida Comercial",
       },
       {
-        route: "Airport Line",
+        route: "Expreso Mercado",
         busID: "XYZ 784",
         eta: "7 mins",
+        location: "Calle Principal",
       },
     ],
   },
   AL3: {
-    stopName: "Broadway corner 42nd",
+    stopName: "Hospital General",
     buses: [
       {
-        route: "Midtown Direct",
+        route: "Ruta A - Centro",
         busID: "ABC 123",
         eta: "2 mins",
+        location: "Avenida Salud",
       },
       {
-        route: "Harbor Route",
+        route: "Expreso Hospital",
         busID: "DEF 456",
         eta: "20 mins",
+        location: "Calle Medicina",
       },
       {
-        route: "Parkside Shuttle",
+        route: "Circular Hospital",
         busID: "GHI 789",
         eta: "10 mins",
+        location: "Plaza Salud",
+      },
+    ],
+  },
+  BL1: {
+    stopName: "Campus Principal",
+    buses: [
+      {
+        route: "Ruta B - Universidad",
+        busID: "UNI 101",
+        eta: "4 mins",
+        location: "Entrada Principal",
       },
       {
-        route: "University Link",
-        busID: "JKL 012",
-        eta: "30 mins",
+        route: "Expreso Campus",
+        busID: "EDU 202",
+        eta: "12 mins",
+        location: "Avenida Universidad",
+      },
+    ],
+  },
+  BL2: {
+    stopName: "Biblioteca Central",
+    buses: [
+      {
+        route: "Ruta B - Universidad",
+        busID: "LIB 303",
+        eta: "6 mins",
+        location: "Plaza Biblioteca",
+      },
+      {
+        route: "Circular Universidad",
+        busID: "STU 404",
+        eta: "15 mins",
+        location: "Calle Estudios",
+      },
+    ],
+  },
+  BL3: {
+    stopName: "Residencias Estudiantiles",
+    buses: [
+      {
+        route: "Ruta B - Universidad",
+        busID: "DOR 505",
+        eta: "8 mins",
+        location: "Bloque Residencial",
+      },
+      {
+        route: "Expreso Residencias",
+        busID: "RES 606",
+        eta: "18 mins",
+        location: "Avenida Estudiantes",
       },
     ],
   },
@@ -74,82 +125,106 @@ const sample_data = [
           "v": "ID1,ID2,ID3"
         },
         {
-          "v": "Atok Street,Atok Street,Atok Street"
+          "v": "Avenida Salud,Calle Medicina,Plaza Salud"
         },
         {
           "v": "12040.5,12040.5,12040.5"
         },
         {
-          "v": "ABC12345,DEF67890,GHI12345"
+          "v": "ABC123,DEF456,GHI789"
         },
         {
           "v": "2023-12-20 22:26:10"
+        },
+        {
+          "v": "Ruta A - Centro,Expreso Hospital,Circular Hospital"
+        },
+        {
+          "v": "a,b,c;d,e,f;g,h,i"
         }
       ]
     },
     {
       "f": [
         {
-          "v": "AL2"
+          "v": "BL1"
         },
         {
-          "v": "ID1,ID2,ID3"
+          "v": "ID4,ID5"
         },
         {
-          "v": "Atok Street,Atok Street,Atok Street"
+          "v": "Entrada Principal,Avenida Universidad"
         },
         {
-          "v": "6505.3,6505.3,6505.3"
+          "v": "6505.3,6505.3"
         },
         {
-          "v": "ABC12345,DEF67890,GHI12345"
+          "v": "UNI101,EDU202"
         },
         {
           "v": "2023-12-20 22:26:10"
+        },
+        {
+          "v": "Ruta B - Universidad,Expreso Campus"
+        },
+        {
+          "v": "x,y,z;p,q,r"
         }
       ]
     },
     {
       "f": [
         {
-          "v": "AL4"
+          "v": "BL2"
         },
         {
-          "v": "ID1,ID2,ID3"
+          "v": "ID6,ID7"
         },
         {
-          "v": "Atok Street,Atok Street,Atok Street"
+          "v": "Plaza Biblioteca,Calle Estudios"
         },
         {
-          "v": "12170,12170,12170"
+          "v": "12170,12170"
         },
         {
-          "v": "ABC12345,DEF67890,GHI12345"
+          "v": "LIB303,STU404"
         },
         {
           "v": "2023-12-20 22:26:10"
+        },
+        {
+          "v": "Ruta B - Universidad,Circular Universidad"
+        },
+        {
+          "v": "m,n,o;j,k,l"
         }
       ]
     },
     {
       "f": [
         {
-          "v": "AL5"
+          "v": "BL3"
         },
         {
-          "v": "ID1,ID2,ID3"
+          "v": "ID8,ID9"
         },
         {
-          "v": "Atok Street,Atok Street,Atok Street"
+          "v": "Bloque Residencial,Avenida Estudiantes"
         },
         {
-          "v": "12170,12170,12170"
+          "v": "12170,12170"
         },
         {
-          "v": "ABC12345,DEF67890,GHI12345"
+          "v": "DOR505,RES606"
         },
         {
           "v": "2023-12-20 22:26:10"
+        },
+        {
+          "v": "Ruta B - Universidad,Expreso Residencias"
+        },
+        {
+          "v": "u,v,w;r,s,t"
         }
       ]
     },
@@ -159,26 +234,26 @@ const sample_data = [
           "v": "AL1"
         },
         {
-          "v": "ID1,ID2,ID3"
+          "v": "ID10,ID11,ID12"
         },
         {
-          "v": "Atok Street,Atok Street,Atok Street"
+          "v": "Avenida Central,Calle Comercio,Plaza Mayor"
         },
         {
           "v": "3563.6,3563.6,3563.6"
         },
         {
-          "v": "ABC12345,DEF67890,GHI12345"
+          "v": "PRG356,FRD902,TRL463"
         },
         {
           "v": "2023-12-20 22:26:10"
         },
         {
-          "v": "Aurora Loop, Aurora Loop, Aurora Loop"
+          "v": "Ruta A - Centro,Expreso Centro,Circular Centro"
         },
         {
           "v": "a,b,c;d,e,f;g,h,i"
-        },
+        }
       ]
     }
   ]
@@ -279,9 +354,50 @@ $(document).ready(async function () {
     console.log(processedBuses);
     if (data[stopID]) {
       $("#currentStop").text(data[stopID].stopName);
-      processedBuses.forEach((bus, index) => {
-        // $("#currentStop").text(bus.stopName);
-        $("#busDetails").append(
+      if (processedBuses.length > 0) {
+        processedBuses.forEach((bus, index) => {
+          $("#busDetails").append(
+              ` <div class="accordion-item">
+                  <h2 class="accordion-header">
+                      <button class="accordion-button ${
+                      index != 0 ? "collapsed" : ""
+                      } w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${index.toString()}" aria-expanded="true" aria-controls="collapse-${index.toString()}">
+
+                      <div class="row align-items-center w-100">
+                          <div class="col">
+                              <div class="vstack">
+                                  <div class="p-2 fw-bold">${bus.routeName}</div>
+                                  <div class="p-2">${bus.plate}</div>
+                              </div>
+                          </div>
+                          <div class="col text-end">
+                              <div class="vstack">
+                                  <div class="p-2">
+                                      <strong>ETA</strong>: ${bus.eta} min. &nbsp; &nbsp;
+                                  </div>
+                                  <div class="p-2" style="font-size: 14px;">
+                                      ${bus.location} &nbsp; &nbsp;
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </button>
+                  </h2>
+                  <div id="collapse-${index.toString()}"
+                      class="accordion-collapse collapse ${index == 0 ? "show" : ""}"
+                      data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                          ${stopListHTML(bus.nextStopList)}
+                      </div>
+                  </div>
+              </div>
+              `
+          );
+        });
+      } else {
+        // Use the static data when no real-time data is available
+        data[stopID].buses.forEach((bus, index) => {
+          $("#busDetails").append(
             ` <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button ${
@@ -291,14 +407,14 @@ $(document).ready(async function () {
                     <div class="row align-items-center w-100">
                         <div class="col">
                             <div class="vstack">
-                                <div class="p-2 fw-bold">${bus.routeName}</div>
-                                <div class="p-2">${bus.plate}</div>
+                                <div class="p-2 fw-bold">${bus.route}</div>
+                                <div class="p-2">${bus.busID}</div>
                             </div>
                         </div>
                         <div class="col text-end">
                             <div class="vstack">
                                 <div class="p-2">
-                                    <strong>ETA</strong>: ${bus.eta} min. &nbsp; &nbsp;
+                                    <strong>ETA</strong>: ${bus.eta} &nbsp; &nbsp;
                                 </div>
                                 <div class="p-2" style="font-size: 14px;">
                                     ${bus.location} &nbsp; &nbsp;
@@ -312,13 +428,14 @@ $(document).ready(async function () {
                     class="accordion-collapse collapse ${index == 0 ? "show" : ""}"
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        ${stopListHTML(bus.nextStopList)}
+                        <ul><li>Next stops information not available</li></ul>
                     </div>
                 </div>
             </div>
             `
-        );
-      });
+          );
+        });
+      }
     } else {
       $("#busDetails").text("No buses found for this stop.");
     }

@@ -1,0 +1,62 @@
+{
+    "AL1": {
+        "stopName": "5ta Ave esquina 72",
+        "buses": [
+            {
+                "route": "Circuito Aurora",
+                "busID": "PRG 356",
+                "eta": "5 mins"
+            },
+            {
+                "route": "Expreso Centro",
+                "busID": "FRD 902", 
+                "eta": "10 mins"
+            },
+            {
+                "route": "Ruta Costera",
+                "busID": "TRL 463",
+                "eta": "15 mins"
+            }
+        ]
+    },
+    "AL2": {
+        "stopName": "8va Ave esquina 55",
+        "buses": [
+            {
+                "route": "Circuito Norte",
+                "busID": "KLM 125",
+                "eta": "3 mins"
+            },
+            {
+                "route": "Línea Aeropuerto",
+                "busID": "XYZ 784",
+                "eta": "7 mins"
+            }
+        ]
+    },
+    "AL3": {
+        "stopName": "Broadway esquina 42",
+        "buses": [
+            {
+                "route": "Directo Centro",
+                "busID": "ABC 123",
+                "eta": "2 mins"
+            },
+            {
+                "route": "Ruta Puerto",
+                "busID": "DEF 456",
+                "eta": "20 mins"
+            },
+            {
+                "route": "Transporte Parque",
+                "busID": "GHI 789",
+                "eta": "10 mins"
+            },
+            {
+                "route": "Enlace Universidad",
+                "busID": "JKL 012",
+                "eta": "30 mins"
+            }
+        ]
+    }
+}
